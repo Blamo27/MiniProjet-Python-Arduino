@@ -27,11 +27,11 @@ class Simulateur(object):
         
     def add(self):
         self.Valeur.set(str(int(self.Valeur.get())+1));
-        if (self.debug == True): print(self.Valeur.get());
+        if (self.debug == True): print("Changement à", self.Valeur.get(), "V");
 
     def rem(self):
         self.Valeur.set(str(int(self.Valeur.get())-1));
-        if (self.debug == True): print(self.Valeur.get());
+        if (self.debug == True): print("Changement à", self.Valeur.get(), "V");
 
     def getVolt(self):
         return self.Valeur.get();

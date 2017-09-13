@@ -3,7 +3,7 @@ import time;
 
 class ledTest(object):
 
-    def __init__(self, arduino, debug = False, mode = "NaN"):
+    def __init__(self, arduino, debug = False, mode = None):
         self.arduino = arduino;
         self.debug   = debug;
         
