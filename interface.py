@@ -6,8 +6,6 @@ class Simulateur(object):
 
     def __init__(self, debug = False):
 
-        print('test');
-
         self.debug = debug;
 
         self.root = Tk();

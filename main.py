@@ -3,10 +3,12 @@ from ledtest import ledTest;      # Tests sur les LEDs
 import serial;                    # pySerial
 import time;
 
-# arduino = serial.Serial('COM3');
-# ledTest() TEST
+debug = False;   # Activer / Désactiver le mode débug (ledTest)
 
-debug = True;    # Activer / Désactive le mode débug
+# arduino = serial.Serial('COM3');
+# led = ledTest(debug, "sandbox");
+
+debug = False;   # Activer / Désactiver le mode débug (Interface)
 timeout = 4000;  # Actualisation de la tension actuelle
 
 def loopVolt():
