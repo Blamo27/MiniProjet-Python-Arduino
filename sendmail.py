@@ -1,14 +1,18 @@
 import smtplib;
 
-class envoimail:
+class Mail:
 
-    def __init__(self, mail):
-        mail = smtplib.SMTP('smtp.gmail.com',587);
-        mail.ehlo();
-        mail.starttls();
+    def __init__(self):
+        self.mail = smtplib.SMTP('smtp.gmail.com',587);
+        self.mail.ehlo();
+        self.mail.starttls();
 
-    def sendmail(self):
+    def send(self):
         mail.login('lepreux95520@gmail.com','motdepasse123');
-        mail.sendmail('lepreux95520@gmail.com','lepreux95520@gmail.com','Il y\'a un problème avec la barrière'); 
+        mail.sendmail('lepreux95520@gmail.com', 'lepreux95520@gmail.com', content); 
         mail.close();
         print("Sent");
+
+# test
+mail = Mail();
+mail.send('Il y\'a un problème avec la barrière');
