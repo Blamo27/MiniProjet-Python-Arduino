@@ -20,3 +20,16 @@ def loopVolt():
 
 volt = Simulateur(debug);
 loopVolt();
+
+
+""" CONDITION INFERIEUR A 1V """
+
+""" POPUP POUR ALERTE
+from interfaces.popup import PopUp;  # popup
+popup = PopUp();
+popup.alert('Alerte : La tension deviens trop faible !');
+"""
+
+""" SEND MAIL """
+
+""" CLIGNOTEMENT DES LEDS """
