@@ -10,7 +10,7 @@ class envoimail:
 
         mail.starttls();
 
-    def __init__(self, content):
+    def sendmail(self, content):
 
         content = ("Il y'a un problème avec la barrière !");
 
