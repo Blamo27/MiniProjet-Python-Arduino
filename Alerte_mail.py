@@ -2,9 +2,7 @@ import smtplib;
 
 class envoimail:
 
-    def __init__(self):
-    
-        content = ("Il y'a un problème avec la barrière !");
+    def __init__(self, mail):
 
         mail = smtplib.SMTP('smtp.gmail.com',587);
 
@@ -12,9 +10,13 @@ class envoimail:
 
         mail.starttls();
 
+    def __init__(self, content):
+
+        content = ("Il y'a un problème avec la barrière !");
+
         mail.login('lepreux95520@gmail.com','motdepasse123');
 
-        mail.sendmail('lepreux95520@gmail.com','lepreux95520@gmail.com',content) ;
+        mail.sendmail('lepreux95520@gmail.com','lepreux95520@gmail.com',content); 
 
         mail.close();
 
