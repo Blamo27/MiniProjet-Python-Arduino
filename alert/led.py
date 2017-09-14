@@ -1,7 +1,7 @@
 import serial;  # pySerial
 import time;
 
-class ledTest(object):
+class led(object):
 
     def __init__(self, arduino, debug = False, mode = None):
         self.arduino = arduino;

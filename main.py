@@ -1,8 +1,9 @@
 # Interface (Simulateur)
 from interfaces.simulateur import Simulateur;
 
-from ledtest import ledTest;   # Tests sur les LEDs
-import serial;                 # pySerial
+from alert.led import led;    # Tests sur les LEDs
+import serial;                # pySerial
+import time;                  # Time
 
 from alert.main import Alert; # include alert Class
 
@@ -15,14 +16,13 @@ alertMsgs = {
 mode  = "sandbox"; # mode simulation (sandbox) ou arduino
 debug = True;      # Activer / Désactiver le mode débug (ledTest)
 
-# arduino = serial.Serial('COM3');
+arduino = serial.Serial('COM3');
 # led = ledTest(arduino, debug, mode);
 
-debug = True;    # Activer / Désactiver le mode débug (Interface)
-timeout = 5000;  # Actualisation de la tension actuelle
+debug = True;           # Activer / Désactiver le mode débug (Interface)
+timeout = 5000;         # Actualisation de la tension actuelle
 
-alert = Alert(); # instance de Alert
-
+alert = Alert(arduino); # instance de Alert
 
 class Main(object):
     def __init__(self, debug = False):
@@ -41,7 +41,7 @@ class Main(object):
         v = volt.getVolt();
         v = float(v);
         
-        if (v > 0): volt.decrease(0.1); 
+        if (v > 0 and v > 0.2): volt.decrease(0.1); 
         if (self.debug == True): print(v, "V");
 
         if (v > 2.0):
@@ -60,13 +60,22 @@ class Main(object):
     def alert(self, status):
         if (self.obj[status] == 0):
             self.obj[status] = 1;
+            self.led(status);
             alert.sendMail(alertMsgs[status].encode('UTF-8'));
             alert.popUp(alertMsgs[status]);
-            
+
+    def led(self, status):
+        Max = 0;
+        i = 0;
+        if (status == 'low'):        Max = 2;
+        if (status == 'very_low'):   Max = 5;
+        if (status == 'no_battery'): Max = 10;
+        while (i < Max):
+            i += 1;
+            alert.led();
+        
 
 # instance de Simulateur
 volt = Simulateur(debug);
 loop = Main();
 loop.volt();
-
-""" CLIGNOTEMENT DES LEDS """
