@@ -16,5 +16,5 @@ class Mail(object):
     def send(self, content):
         self.connect(); # Connexion au serveur SMTP avant envoi
         
-        self.mail.sendmail('lepreux95520@gmail.com', 'lepreux95520@gmail.com', content); 
+        self.mail.sendmail('lepreux95520@gmail.com', 'field.watcher.p10@gmail.com', content); 
         if (self.debug): print("Envoyé !");
