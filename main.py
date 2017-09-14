@@ -8,7 +8,7 @@ from alert.main import Alert; # include alert Class
 
 alertMsgs = {
     'low': "Batterie faible",
-    'very_low': "Plus de batterie",
+    'very_low': "Batterie très faible",
     'no_battery': "Plus de signal"
 };
 
@@ -25,40 +25,48 @@ alert = Alert(); # instance de Alert
 
 
 class Main(object):
-    def __init__(self, i, debug = False):
-        self.i = i;
+    def __init__(self, debug = False):
         self.debug = debug;
+        self.obj = {
+            'low': 0,
+            'very_low': 0,
+            'no_battery': 0
+        };
     
     def volt(self):
         root = volt.getRoot();
         root.after(timeout, self.volt);
 
-        if (self.i == 30): self.i = 0; 
-        if (self.debug == True): print("i:", self.i);
-
+        # -0.1 toutes les 5 secondes
         v = volt.getVolt();
         v = float(v);
-        if (debug == True): print(v, "V");
+        
+        if (v > 0): volt.decrease(0.1); 
+        if (self.debug == True): print(v, "V");
+
+        if (v > 2.0):
+            self.obj['low']        = 0;
+            self.obj['very_low']   = 0;
+            self.obj['no_battery'] = 0;
 
         # Conditions si batterie inférieur à 2V
-        message = None;
         if (v < 2.0 and v > 1.0):
-            message = alertMsgs['low'];
-            self.i += 1;
+            self.alert('low');
         elif (v <= 1.0 and v >= 0.5):
-            message = alertMsgs['very_low'];
-            self.i += 1;
+            self.alert('very_low');
         elif (v < 0.5):
-            message = alertMsgs['no_battery'];
-            self.i += 1;
+            self.alert('no_battery');
 
-        if (message != None and self.i == 1):
-            alert.sendMail(message);
-            alert.popUp(message);
+    def alert(self, status):
+        if (self.obj[status] == 0):
+            self.obj[status] = 1;
+            alert.sendMail(alertMsgs[status].encode('UTF-8'));
+            alert.popUp(alertMsgs[status]);
+            
 
 # instance de Simulateur
 volt = Simulateur(debug);
-loop = Main(0);
+loop = Main();
 loop.volt();
 
 """ CLIGNOTEMENT DES LEDS """
